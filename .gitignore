@@ -1,1 +1,5 @@
 src/main/resources/screenshots/
+.idea/
+*.iml
+target/
+.DS_Store

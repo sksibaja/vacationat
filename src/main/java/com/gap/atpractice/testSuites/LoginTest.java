@@ -30,8 +30,8 @@ public class LoginTest {
 
     public static void TestPageObject (WebDriver driver) {
         try {
-            LoginPage loginpage = new LoginPage(driver);
-            loginpage.goToLoginPage();
+            LoginPage loginpage = new LoginPage(driver).get();  //when using this last get, I', avoiding the goToLoginPage method
+            //loginpage.goToLoginPage();
             loginpage.userLogin(USR,PWD);
         } catch (Exception e) {
             e.printStackTrace();
