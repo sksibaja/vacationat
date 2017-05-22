@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,15 +19,24 @@ public class LoginPage  extends LoadableComponent<LoginPage>{
     private WebDriver driver;
     private BotStyle botDriver;
 
-    private static String URL= "http://vacations.evercoding.com/users/sign_in";
+    private static String URL= "https://vacations-management.herokuapp.com/users/sign_in";
 
-    //Locators
+    //Locators used when implementing Page Objects
+
     By pageHeader = By.xpath("#content>h1");
     By userInput = By.cssSelector("#user_email");
     By passInput = By.cssSelector("#user_password");
     By loginBtn = By.xpath(".//*[@id='new_user']/div[3]/p[4]/input");
 
 
+    //Locators used when implementing Page Factory, we're using the annotation @FindBy
+    @FindBy(xpath = "#content>h1") private  WebElement headerEl;
+    @FindBy(css = "#user_email") private WebElement userInputEl;
+    @FindBy(css = "#user_password") private WebElement passInputEl;
+    @FindBy(xpath = ".//*[@id='new_user']/div[3]/p[4]/input") private WebElement loginBtnEl;
+
+
+    //Constructor initializes both drivers
     public LoginPage(WebDriver driver){
         this.driver = driver;
         this.botDriver =  new BotStyle(driver);
@@ -34,68 +44,37 @@ public class LoginPage  extends LoadableComponent<LoginPage>{
     }
 
    // THis is no longer used cause is implemented by the Loadable component
+   /*
    public void goToLoginPage (){
+
         this.driver.get(URL);
     }
+    */
 
     public AdminUsersPage userLogin(String username, String password){
 
        // WebElement headerElm = (new WebDriverWait(this.driver,10)).until(ExpectedConditions.presenceOfElementLocated(pageHeader));
 
-        //WebElement headerElm = this.driver.findElement(pageHeader);
+        //Using PageFactory pattern
+        /*
+        botDriver.type(userInputEl, username);
+        botDriver.type(passInputEl, password);
+        loginBtnEl.submit();*/
 
-        //if (isPageLoaded(driver,URL)){
+        //Using botStyle
+        WebElement userInputEl = this.driver.findElement(userInput);
+        botDriver.type(userInputEl, username);
 
-            //if(headerElm.isDisplayed()){
-              /*  WebElement userInputEl = this.driver.findElement(userInput);
+        WebElement passInputEl = this.driver.findElement(passInput);
+        botDriver.type(passInputEl, password);
 
-                userInputEl.clear();
-                userInputEl.sendKeys(username);
+        WebElement loginBtnEl = this.driver.findElement(loginBtn);
+        loginBtnEl.submit();
 
-                WebElement passInputEl = this.driver.findElement(passInput);
-                passInputEl.clear();
-                passInputEl.sendKeys(password);
-
-                WebElement loginBtnEl = this.driver.findElement(loginBtn);
-                loginBtnEl.submit();
-
-                System.out.println("Login form submitted");*/
-
-            //}
-
-
-
-            //Using botStyle
-            WebElement userInputEl = this.driver.findElement(userInput);
-            botDriver.type(userInputEl, username);
-
-            WebElement passInputEl = this.driver.findElement(passInput);
-            botDriver.type(passInputEl, password);
-
-            WebElement loginBtnEl = this.driver.findElement(loginBtn);
-            loginBtnEl.submit();
-
-            System.out.println("Login form submitted");
-
-        //}
-
+        System.out.println("Login form submitted");
 
         return new AdminUsersPage(this.driver);
     }
-
-/*
-    private static boolean isPageLoaded(WebDriver driverPage, String pageURL){
-        boolean isLoaded = false;
-        driverPage.get(pageURL);
-        JavascriptExecutor js = (JavascriptExecutor)driverPage;
-        if (js.executeScript("return document.readyState").toString().equals("complete")){
-            System.out.println("Overview page is loaded");
-            isLoaded = true;
-        }
-        return isLoaded;
-    }
-
-    */
 
     @Override
     protected void load() {

@@ -44,6 +44,7 @@ public class BotStyle {
         return we;
     }
 
+    //This method is implemented using the locator as parameter.
     public void type (By locator, String text){
 
         WebElement we = this.driver.findElement(locator);
@@ -51,6 +52,7 @@ public class BotStyle {
         we.sendKeys(text);
     }
 
+    //This method is implemented using the WebElement as parameter
     public void type (WebElement we, String text){
         we.clear();
         we.sendKeys(text);
