@@ -53,7 +53,9 @@ public class LoginPage  extends LoadableComponent<LoginPage>{
 
     public AdminUsersPage userLogin(String username, String password){
 
-       // WebElement headerElm = (new WebDriverWait(this.driver,10)).until(ExpectedConditions.presenceOfElementLocated(pageHeader));
+        //botDriver.waitForPageTitle(10, "" );
+
+        //WebElement headerElm = (new WebDriverWait(this.driver,10)).until(ExpectedConditions.presenceOfElementLocated());
 
         //Using PageFactory pattern
         /*

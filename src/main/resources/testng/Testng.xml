@@ -1,0 +1,29 @@
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Smoke">
+
+
+    <test name="Vacation" >
+
+        <parameter name="url" value=""/>
+        <parameter name="browser" value="firefox"/>
+
+        <parameter name="username" value="at_java_training@wearegap.com"/>
+        <parameter name="password" value="123queso"/>
+
+
+        <groups>
+            <run>
+                <include name="login" />
+            </run>
+        </groups>
+
+
+        <classes>
+            <class name="com.gap.atpractice.testSuites.LoginTest" />
+        </classes>
+
+    </test>
+
+</suite>
