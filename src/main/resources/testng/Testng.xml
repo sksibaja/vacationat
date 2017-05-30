@@ -3,22 +3,24 @@
 
 <suite name="Smoke">
 
-
     <test name="Vacation" >
 
         <parameter name="url" value=""/>
-        <parameter name="browser" value="firefox"/>
+        <parameter name="browser" value="Chrome"/>
 
         <parameter name="username" value="at_java_training@wearegap.com"/>
         <parameter name="password" value="123queso"/>
 
+        <parameter name="invalidUsername" value="at_java_training@wearegap.co"/>
+        <parameter name="invalidPassword" value="123quesito"/>
 
         <groups>
             <run>
-                <include name="login" />
+                <include name="loginSuccess" />
+                <include name="loginFail" />
+
             </run>
         </groups>
-
 
         <classes>
             <class name="com.gap.atpractice.testSuites.LoginTest" />

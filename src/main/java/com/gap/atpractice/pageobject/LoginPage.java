@@ -14,15 +14,12 @@ import com.gap.atpractice.pageobject.BotStyle;
 /**
  * Created by auto on 15/05/17.
  */
-public class LoginPage  extends LoadableComponent<LoginPage>{
+public class LoginPage extends PageBase{
 
-    private WebDriver driver;
-    private BotStyle botDriver;
 
-    private static String URL= "https://vacations-management.herokuapp.com/users/sign_in";
+    private static String PATH= "users/sign_in";
 
     //Locators used when implementing Page Objects
-
     By pageHeader = By.xpath("#content>h1");
     By userInput = By.cssSelector("#user_email");
     By passInput = By.cssSelector("#user_password");
@@ -38,57 +35,58 @@ public class LoginPage  extends LoadableComponent<LoginPage>{
 
     //Constructor initializes both drivers
     public LoginPage(WebDriver driver){
-        this.driver = driver;
-        this.botDriver =  new BotStyle(driver);
-
+        super(driver);
     }
 
-   // THis is no longer used cause is implemented by the Loadable component
-   /*
-   public void goToLoginPage (){
-
-        this.driver.get(URL);
-    }
-    */
-
-    public AdminUsersPage userLogin(String username, String password){
+    public EmployeesPage userLoginSuccess(String username, String password){
 
         //botDriver.waitForPageTitle(10, "" );
-
         //WebElement headerElm = (new WebDriverWait(this.driver,10)).until(ExpectedConditions.presenceOfElementLocated());
 
-        //Using PageFactory pattern
-        /*
-        botDriver.type(userInputEl, username);
-        botDriver.type(passInputEl, password);
-        loginBtnEl.submit();*/
-
         //Using botStyle
-        WebElement userInputEl = this.driver.findElement(userInput);
+        WebElement userInputEl = super.driver.findElement(userInput);
         botDriver.type(userInputEl, username);
 
-        WebElement passInputEl = this.driver.findElement(passInput);
+        WebElement passInputEl = super.driver.findElement(passInput);
         botDriver.type(passInputEl, password);
 
-        WebElement loginBtnEl = this.driver.findElement(loginBtn);
+        WebElement loginBtnEl = super.driver.findElement(loginBtn);
         loginBtnEl.submit();
 
         System.out.println("Login form submitted");
 
-        return new AdminUsersPage(this.driver);
+        return new EmployeesPage(super.driver);
+    }
+
+    public LoginPage userLoginFail(String username, String password){
+
+        //Using botStyle
+        WebElement userInputEl = super.driver.findElement(userInput);
+        botDriver.type(userInputEl, username);
+
+        WebElement passInputEl = super.driver.findElement(passInput);
+        botDriver.type(passInputEl, password);
+
+        WebElement loginBtnEl = super.driver.findElement(loginBtn);
+        loginBtnEl.submit();
+
+        System.out.println("Login form submitted");
+
+        return new LoginPage(super.driver);
     }
 
     @Override
     protected void load() {
-        this.driver.get(URL);
+        this.driver.get(getPageURL(PATH));
     }
 
     @Override
     protected void isLoaded() throws Error {
-        this.driver.get(URL);
+        this.driver.get(getPageURL(PATH));
         JavascriptExecutor js = (JavascriptExecutor)this.driver;
         if (js.executeScript("return document.readyState").toString().equals("complete")){
-            System.out.println("Overview page is loaded");
+            System.out.println("Login page is loaded");
         }
     }
+
 }
