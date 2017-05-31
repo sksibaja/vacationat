@@ -16,14 +16,15 @@
 
         <groups>
             <run>
-                <include name="loginSuccess" />
-                <include name="loginFail" />
-
+                <!--<include name="loginSuccess" />-->
+                <!--<include name="loginFail" />-->
+                <include name="newEmployee" />
             </run>
         </groups>
 
         <classes>
             <class name="com.gap.atpractice.testSuites.LoginTest" />
+            <class name="com.gap.atpractice.testSuites.NewEmployeeTest" />
         </classes>
 
     </test>

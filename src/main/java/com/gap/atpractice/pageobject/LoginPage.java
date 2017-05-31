@@ -4,11 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.LoadableComponent;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import com.gap.atpractice.pageobject.BotStyle;
 
 
 /**
@@ -26,11 +21,11 @@ public class LoginPage extends PageBase{
     By loginBtn = By.xpath(".//*[@id='new_user']/div[3]/p[4]/input");
 
 
-    //Locators used when implementing Page Factory, we're using the annotation @FindBy
-    @FindBy(xpath = "#content>h1") private  WebElement headerEl;
-    @FindBy(css = "#user_email") private WebElement userInputEl;
-    @FindBy(css = "#user_password") private WebElement passInputEl;
-    @FindBy(xpath = ".//*[@id='new_user']/div[3]/p[4]/input") private WebElement loginBtnEl;
+//    //Locators used when implementing Page Factory, we're using the annotation @FindBy
+//    @FindBy(xpath = "#content>h1") private  WebElement headerEl;
+//    @FindBy(css = "#user_email") private WebElement userInputEl;
+//    @FindBy(css = "#user_password") private WebElement passInputEl;
+//    @FindBy(xpath = ".//*[@id='new_user']/div[3]/p[4]/input") private WebElement loginBtnEl;
 
 
     //Constructor initializes both drivers
