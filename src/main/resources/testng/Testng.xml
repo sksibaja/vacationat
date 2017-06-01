@@ -25,6 +25,8 @@
         <classes>
             <class name="com.gap.atpractice.testSuites.LoginTest" />
             <class name="com.gap.atpractice.testSuites.NewEmployeeTest" />
+            <class name="com.gap.atpractice.testngfactory.NewEmployeeFactory" />
+
         </classes>
 
     </test>
