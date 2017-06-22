@@ -1,5 +1,6 @@
 package com.gap.atpractice.utils;
 
+        import com.gap.atpractice.selenium.SeleniumBase;
         import org.openqa.selenium.OutputType;
         import org.openqa.selenium.TakesScreenshot;
         import org.openqa.selenium.WebDriver;
@@ -12,7 +13,8 @@ package com.gap.atpractice.utils;
  */
 public class TakeScreenshot {
 
-    public static void takeScreenshot(WebDriver driver, String filePath){
+    public void takeScreenshot(WebDriver driver, String filePath){
+
         File imageFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         try{
             FileUtils.copyFile(imageFile, new File(filePath));
