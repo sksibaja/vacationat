@@ -1,8 +1,7 @@
-package com.gap.atpractice.pageobject;
+package com.gap.atpractice.botstyletest;
 import com.google.common.base.Function;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
@@ -34,9 +33,9 @@ public class BotStyle {
     }
 
     public WebElement waitForElementPresent(final By byElement, int timeoutInSeconds){
-        Wait<WebDriver> wait = new WebDriverWait(driver, timeoutInSeconds);
 
-        WebElement we= wait.until(new Function<WebDriver, WebElement>() {
+        Wait<WebDriver> wait = new WebDriverWait(driver, timeoutInSeconds);
+        WebElement we = wait.until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver driver) {
                 return driver.findElement(byElement);
             }

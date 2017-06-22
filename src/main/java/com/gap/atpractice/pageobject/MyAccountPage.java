@@ -1,27 +1,30 @@
 package com.gap.atpractice.pageobject;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
- * Created by ssibaja on 5/15/17.
+ * Created by ssibaja on 6/19/17.
  */
-public class AdminUsersPage extends PageBase {
+public class MyAccountPage extends PageBase{
 
-    private static String PATH= "users";
+    private static String PATH= "my_account";
 
     //Locators
     private By employeesInformationTab = By.xpath(".//*[@id='menu']/li[1]/a");
     private By administrativeUsersTab = By.xpath(".//*[@id='menu']/li[2]/a");
     private By myAccountTab = By.xpath(".//*[@id='menu']/li[3]/a");
 
+    private By pageHeader = By.xpath(".//*[@id='content']/h2");
 
-    public  AdminUsersPage(WebDriver driver){
+
+    public MyAccountPage(WebDriver driver){
         super(driver);
     }
 
-    public AdminUsersPage getAdministrativeUsersPage (WebDriver driver){
+    public AdminUsersPage getMyAccountPage (WebDriver driver){
         return new AdminUsersPage(driver);
     }
 
@@ -46,28 +49,32 @@ public class AdminUsersPage extends PageBase {
         return new MyAccountPage(super.driver);
     }
 
+    public String getPageHeaderText(){
+
+        WebElement header = botDriver.waitForElementPresent(pageHeader,10);
+        return header.getText().toString();
+    }
+
     @Override
     protected void load() {
         this.driver.get(getPageURL(PATH));
     }
 
+
     @Override
     protected void isLoaded(){
-
         try{
             this.driver.get(getPageURL(PATH));
             JavascriptExecutor js = (JavascriptExecutor)this.driver;
-            if (js.executeScript("return document.readyState").toString().equals("complete"))
-            {
-                System.out.println("Administrative Users (tab) page is loaded");
+            if (js.executeScript("return document.readyState").toString().equals("complete")){
+                System.out.println("My Account (tab) page is loaded");
             }
         }catch(Exception ex)
         {
-            System.out.println("Error on loading Administrative Users (tab) page:");
+            System.out.println("Error on My Account page:");
             System.out.print(ex.getStackTrace().toString());
         }
 
-
     }
-}
 
+}
