@@ -95,15 +95,23 @@ public class NewEmployeePage extends PageBase {
 
     @Override
     protected void load() {
+
         this.driver.get(getPageURL(PATH));
     }
 
     @Override
-    protected void isLoaded() throws Error {
-        this.driver.get(getPageURL(PATH));
-        JavascriptExecutor js = (JavascriptExecutor)this.driver;
-        if (js.executeScript("return document.readyState").toString().equals("complete")){
-            System.out.println("New Employee page is loaded");
+    protected void isLoaded(){
+        try{
+            this.driver.get(getPageURL(PATH));
+            JavascriptExecutor js = (JavascriptExecutor)this.driver;
+            if (js.executeScript("return document.readyState").toString().equals("complete")){
+                System.out.println("New Employee page is loaded");
+            }
+        }catch(Exception ex)
+        {
+            System.out.println("Error on New Employee page:");
+            System.out.print(ex.getStackTrace().toString());
         }
+
     }
 }

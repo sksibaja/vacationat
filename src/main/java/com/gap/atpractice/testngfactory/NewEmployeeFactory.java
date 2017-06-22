@@ -9,11 +9,13 @@ import org.testng.annotations.Factory;
 public class NewEmployeeFactory {
 
 
+    private int INDEX = 5;
+
     //Factory implementation, This defines the number of iterations a testCall will be ran.
     @Factory
     public Object[] CreateInstances(){
-        Object[] result = new Object[10];
-        for (int i=0; i<10; i++){
+        Object[] result = new Object[INDEX];
+        for (int i=0; i<INDEX; i++){
             result[i] = new NewEmployeeTest(i);
         }
         return result;

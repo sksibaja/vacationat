@@ -3,10 +3,16 @@
 
 <suite name="Smoke">
 
+    <listeners>
+        <listener class-name="com.gap.atpractice.listener.CustomListener" />
+    </listeners>
+
     <test name="Vacation" >
 
         <parameter name="url" value=""/>
         <parameter name="browser" value="Chrome"/>
+        <parameter name="FirefoxBrowser" value="Firefox"/>
+        <parameter name="IEBrowser" value="IE"/>
 
         <parameter name="username" value="at_java_training@wearegap.com"/>
         <parameter name="password" value="123queso"/>
@@ -16,9 +22,10 @@
 
         <groups>
             <run>
-                <!--<include name="loginSuccess" />-->
-                <!--<include name="loginFail" />-->
+                <include name="loginSuccess" />
+                <include name="loginFail" />
                 <include name="newEmployee" />
+                <include name="employeePageNavigation" />
             </run>
         </groups>
 
@@ -26,6 +33,8 @@
             <class name="com.gap.atpractice.testSuites.LoginTest" />
             <class name="com.gap.atpractice.testSuites.NewEmployeeTest" />
             <class name="com.gap.atpractice.testngfactory.NewEmployeeFactory" />
+            <class name="com.gap.atpractice.testSuites.EmployeeTest" />
+
 
         </classes>
 
