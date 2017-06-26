@@ -1,9 +1,6 @@
 package com.gap.atpractice.pageobject;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 
 /**
@@ -11,63 +8,47 @@ import org.openqa.selenium.WebElement;
  */
 public class LoginPage extends PageBase{
 
-
-    private static String PATH= "users/sign_in";
+    private final String PATH= "users/sign_in";
 
     //Locators used when implementing Page Objects
-    By pageHeader = By.xpath("#content>h1");
-    By userInput = By.cssSelector("#user_email");
-    By passInput = By.cssSelector("#user_password");
-    By loginBtn = By.xpath(".//*[@id='new_user']/div[3]/p[4]/input");
-
-
-//    //Locators used when implementing Page Factory, we're using the annotation @FindBy
-//    @FindBy(xpath = "#content>h1") private  WebElement headerEl;
-//    @FindBy(css = "#user_email") private WebElement userInputEl;
-//    @FindBy(css = "#user_password") private WebElement passInputEl;
-//    @FindBy(xpath = ".//*[@id='new_user']/div[3]/p[4]/input") private WebElement loginBtnEl;
-
+    private By pageHeader = By.xpath(".//div[@id='content']/h1");
+    private By userInput = By.cssSelector("#user_email");
+    private By passInput = By.cssSelector("#user_password");
+    private By loginBtn = By.xpath(".//form[@id='new_user']/div[3]/p[4]/input[@name='commit'][@type='submit']");
 
     //Constructor initializes both drivers
     public LoginPage(WebDriver driver){
         super(driver);
     }
 
-    public EmployeesPage userLoginSuccess(String username, String password){
+    public EmployeePage userLoginSuccess(String username, String password){
 
-        //botDriver.waitForPageTitle(10, "" );
-        //WebElement headerElm = (new WebDriverWait(this.driver,10)).until(ExpectedConditions.presenceOfElementLocated());
+        if (isPageHeaderPresent()) {
 
-        //Using botStyle
-        WebElement userInputEl = super.driver.findElement(userInput);
-        botDriver.type(userInputEl, username);
+            //Using botStyle - using the Method that receives the By element.
+            botDriver.type(userInput, username);
+            botDriver.type(passInput, password);
+            botDriver.submit(loginBtn);
 
-        WebElement passInputEl = super.driver.findElement(passInput);
-        botDriver.type(passInputEl, password);
-
-        WebElement loginBtnEl = super.driver.findElement(loginBtn);
-        loginBtnEl.submit();
-
-        System.out.println("Login form submitted");
-
-        return new EmployeesPage(super.driver);
+            return new EmployeePage(super.driver);
+        }
+        return null;
     }
 
-    public LoginPage userLoginFail(String username, String password){
+    public LoginPage userLoginFail(String invalidUsername, String invalidPassword){
 
-        //Using botStyle
-        WebElement userInputEl = super.driver.findElement(userInput);
-        botDriver.type(userInputEl, username);
+        if (isPageHeaderPresent()) {
+            botDriver.type(userInput, invalidUsername);
+            botDriver.type(passInput, invalidPassword);
+            botDriver.submit(loginBtn);
+            return new LoginPage(super.driver);
+        }
+        return null;
+    }
 
-        WebElement passInputEl = super.driver.findElement(passInput);
-        botDriver.type(passInputEl, password);
+    public boolean isPageHeaderPresent(){
 
-        WebElement loginBtnEl = super.driver.findElement(loginBtn);
-        loginBtnEl.submit();
-
-        System.out.println("Login form submitted");
-
-        return new LoginPage(super.driver);
+        return botDriver.waitForElementPresent(pageHeader,10);
     }
 
     @Override
@@ -76,11 +57,16 @@ public class LoginPage extends PageBase{
     }
 
     @Override
-    protected void isLoaded() throws Error {
-        this.driver.get(getPageURL(PATH));
-        JavascriptExecutor js = (JavascriptExecutor)this.driver;
-        if (js.executeScript("return document.readyState").toString().equals("complete")){
-            System.out.println("Login page is loaded");
+    protected void isLoaded(){
+        try{
+            this.driver.get(getPageURL(PATH));
+            JavascriptExecutor js = (JavascriptExecutor)this.driver;
+            if (js.executeScript("return document.readyState").toString().equals("complete")){
+                System.out.println("Login page is loaded");
+            }
+        }catch(Exception ex)
+        {
+            System.out.println( String.format("%s%s", "Error on Login page:", ex.getStackTrace().toString()) );
         }
     }
 
