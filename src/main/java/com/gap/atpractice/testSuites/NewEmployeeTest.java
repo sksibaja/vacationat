@@ -21,22 +21,17 @@ public class NewEmployeeTest extends TestBase {
     private CommonLogin commonLogin;
 
     // The constructor initializes only the needed "Commons".
-    public NewEmployeeTest(){
-
-        commonLogin = new CommonLogin();
-    }
-
     //In this case the index is initializes the index.
     public NewEmployeeTest (int index){
 
         testIndex = index;
+        commonLogin = new CommonLogin();
     }
 
 
     @Test(groups = "newEmployee", dataProvider = "dpe", dataProviderClass = NewEmployeeDataProvider.class)
     public void TestNewEmployee(String username, String password, String firstEmployeeName, String lastEmployeeName, String employeeEmail,
-                                String employeeID, String employeeLeaderName, String year, String month,
-                                String day){
+                                String employeeID, String employeeLeaderName, String year, String month, String day){
         try{
             commonLogin.TestLoginSuccess(username, password, super.driver);
 

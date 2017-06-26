@@ -1,5 +1,6 @@
 package com.gap.atpractice.pageobject;
 
+import com.gap.atpractice.botstyletest.BotStyle;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -10,49 +11,25 @@ import org.openqa.selenium.WebElement;
  */
 public class MyAccountPage extends PageBase{
 
-    private static String PATH= "my_account";
+    private final String PATH= "my_account";
 
     //Locators
-    private By employeesInformationTab = By.xpath(".//*[@id='menu']/li[1]/a");
-    private By administrativeUsersTab = By.xpath(".//*[@id='menu']/li[2]/a");
-    private By myAccountTab = By.xpath(".//*[@id='menu']/li[3]/a");
-
-    private By pageHeader = By.xpath(".//*[@id='content']/h2");
-
+    private By employeesInformationTab = By.xpath(".//ul[@id='menu']/li[1]/a[@href='/employees']");
+    private By pageHeader = By.xpath(".//div[@id='content']/h2");
 
     public MyAccountPage(WebDriver driver){
         super(driver);
     }
 
-    public AdminUsersPage getMyAccountPage (WebDriver driver){
-        return new AdminUsersPage(driver);
-    }
-
     public EmployeePage userNavigatesToEmployeesInfoTab(){
 
-        WebElement employeesInfoTabElm = super.driver.findElement(employeesInformationTab);
-        employeesInfoTabElm.click();
+        botDriver.click(employeesInformationTab);
         return new EmployeePage(super.driver);
-    }
-
-    public AdminUsersPage userNavigatesToAdministrativeUsersTab(){
-
-        WebElement adminUsersTabElm = super.driver.findElement(administrativeUsersTab);
-        adminUsersTabElm.click();
-        return new AdminUsersPage(super.driver);
-    }
-
-    public MyAccountPage userNavigatesToMyAccountPage(){
-
-        WebElement myAccountTabElm = super.driver.findElement(myAccountTab);
-        myAccountTabElm.click();
-        return new MyAccountPage(super.driver);
     }
 
     public String getPageHeaderText(){
 
-        WebElement header = botDriver.waitForElementPresent(pageHeader,10);
-        return header.getText().toString();
+        return botDriver.getTextOnElementPresent(pageHeader,10);
     }
 
     @Override
@@ -71,8 +48,7 @@ public class MyAccountPage extends PageBase{
             }
         }catch(Exception ex)
         {
-            System.out.println("Error on My Account page:");
-            System.out.print(ex.getStackTrace().toString());
+            System.out.println(String.format("%s%s", "Error on My Account page:", ex.getStackTrace().toString()));
         }
 
     }

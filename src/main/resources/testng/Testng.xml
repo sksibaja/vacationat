@@ -1,7 +1,43 @@
-
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Smoke">
+<suite name="Smoke" verbose="1">
+
+    <parameter name="testLinkURL" value="https://testlink.wearegap.com/lib/api/xmlrpc/v1/xmlrpc.php"/>
+    <parameter name="testLinkKey" value="80535d62d292f57003486de62441abe8"/>
+
+    <parameter name="testProjectName" value="Automation Practice - Training"/>
+    <parameter name="testProjectID" value="null"/>
+
+    <parameter name="createTestPlan" value="false"/>
+    <parameter name="testPlanName" value="My Test Plan SS"/>
+    <parameter name="testPlanID" value="22523"/>
+    <parameter name="testPlanNotes" value="Test Plan for training purposes"/>
+    <parameter name="testPlanIsActive" value="true"/>
+    <parameter name="testPlanIsPublic" value="true"/>
+
+    <parameter name="createBuild" value="false"/>
+    <parameter name="buildName" value="My build"/>
+    <parameter name="buildID" value="null"/>
+    <parameter name="buildNotes" value="My build"/>
+
+    <!--Test Cases-->
+    <parameter name="loginSuccessID" value="22568"/>
+    <parameter name="addLoginSuccess" value="false"/>
+    <parameter name="version" value="1"/>
+    <parameter name="platformId" value="null"/>
+    <parameter name="order" value="null"/>
+    <parameter name="urgency" value="null"/>
+
+    <parameter name="testCaseExternalId" value="null"/>
+    <parameter name="testCaseNotes" value="null"/>
+    <parameter name="guess" value="false"/>
+    <parameter name="bugId" value="null"/>
+    <parameter name="platformName" value="null"/>
+    <parameter name="customFields" value="null"/>
+    <parameter name="overwrite" value="true"/>
+
+    <parameter name="loginSuccessDisplaysSuccessMessageID" value="22570"/>
+
 
     <listeners>
         <listener class-name="com.gap.atpractice.listener.CustomListener" />
@@ -11,14 +47,13 @@
 
         <parameter name="url" value=""/>
         <parameter name="browser" value="Chrome"/>
-        <parameter name="FirefoxBrowser" value="Firefox"/>
-        <parameter name="IEBrowser" value="IE"/>
-
         <parameter name="username" value="at_java_training@wearegap.com"/>
         <parameter name="password" value="123queso"/>
-
         <parameter name="invalidUsername" value="at_java_training@wearegap.co"/>
         <parameter name="invalidPassword" value="123quesito"/>
+
+        <parameter name="screenShotsPath" value="./src/main/resources/screenshots/"/>
+
 
         <groups>
             <run>
@@ -34,7 +69,6 @@
             <class name="com.gap.atpractice.testSuites.NewEmployeeTest" />
             <class name="com.gap.atpractice.testngfactory.NewEmployeeFactory" />
             <class name="com.gap.atpractice.testSuites.EmployeeTest" />
-
 
         </classes>
 

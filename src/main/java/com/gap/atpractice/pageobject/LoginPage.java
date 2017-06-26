@@ -8,15 +8,13 @@ import org.openqa.selenium.*;
  */
 public class LoginPage extends PageBase{
 
-
-    private static String PATH= "users/sign_in";
+    private final String PATH= "users/sign_in";
 
     //Locators used when implementing Page Objects
-    private By pageHeader = By.xpath(".//*[@id='content']/h1");
+    private By pageHeader = By.xpath(".//div[@id='content']/h1");
     private By userInput = By.cssSelector("#user_email");
     private By passInput = By.cssSelector("#user_password");
-    private By loginBtn = By.xpath(".//*[@id='new_user']/div[3]/p[4]/input");
-
+    private By loginBtn = By.xpath(".//form[@id='new_user']/div[3]/p[4]/input[@name='commit'][@type='submit']");
 
     //Constructor initializes both drivers
     public LoginPage(WebDriver driver){
@@ -25,62 +23,32 @@ public class LoginPage extends PageBase{
 
     public EmployeePage userLoginSuccess(String username, String password){
 
+        if (isPageHeaderPresent()) {
 
-        try{
-            if (isPageHeaderPresent()) {
+            //Using botStyle - using the Method that receives the By element.
+            botDriver.type(userInput, username);
+            botDriver.type(passInput, password);
+            botDriver.submit(loginBtn);
 
-                //Using botStyle
-                WebElement userInputEl = super.driver.findElement(userInput);
-                botDriver.type(userInputEl, username);
-
-                WebElement passInputEl = super.driver.findElement(passInput);
-                botDriver.type(passInputEl, password);
-
-                WebElement loginBtnEl = super.driver.findElement(loginBtn);
-                loginBtnEl.submit();
-
-                System.out.println("Login form submitted");
-
-            }
-        }catch (NoSuchElementException ex)
-        {
-            System.out.println("Error on Login page:");
-            System.out.print(ex.getStackTrace().toString());
+            return new EmployeePage(super.driver);
         }
-        return new EmployeePage(super.driver);
+        return null;
     }
 
     public LoginPage userLoginFail(String invalidUsername, String invalidPassword){
 
-        try{
-            if (isPageHeaderPresent()) {
-
-                //Using botStyle
-                WebElement userInputEl = super.driver.findElement(userInput);
-                botDriver.type(userInputEl, invalidUsername);
-
-                WebElement passInputEl = super.driver.findElement(passInput);
-                botDriver.type(passInputEl, invalidPassword);
-
-                WebElement loginBtnEl = super.driver.findElement(loginBtn);
-                loginBtnEl.submit();
-
-                System.out.println("Login form submitted");
-
-            }
-        }catch (NoSuchElementException ex)
-        {
-            System.out.println("Error on Login page:");
-            System.out.print(ex.getStackTrace().toString());
+        if (isPageHeaderPresent()) {
+            botDriver.type(userInput, invalidUsername);
+            botDriver.type(passInput, invalidPassword);
+            botDriver.submit(loginBtn);
+            return new LoginPage(super.driver);
         }
-
-        return new LoginPage(super.driver);
+        return null;
     }
 
     public boolean isPageHeaderPresent(){
 
-        WebElement header = botDriver.waitForElementPresent(pageHeader,10);
-        return header.isDisplayed();
+        return botDriver.waitForElementPresent(pageHeader,10);
     }
 
     @Override
@@ -98,10 +66,8 @@ public class LoginPage extends PageBase{
             }
         }catch(Exception ex)
         {
-            System.out.println("Error on Login page:");
-            System.out.print(ex.getStackTrace().toString());
+            System.out.println( String.format("%s%s", "Error on Login page:", ex.getStackTrace().toString()) );
         }
-
     }
 
 }

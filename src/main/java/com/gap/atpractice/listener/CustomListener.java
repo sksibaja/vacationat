@@ -13,7 +13,7 @@ import org.testng.ITestResult;
  */
 public class CustomListener implements ITestListener {
 
-    private static String FILES_STORAGE_PATH = "./src/main/resources/screenshots/";
+    private final String FILES_STORAGE_PATH = "./src/main/resources/screenshots/";
     private Utils utils;
 
     public CustomListener(){
@@ -22,30 +22,32 @@ public class CustomListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
+        System.out.println(String.format("%s%s%s", "=========================    TEST CASE: ", iTestResult.getName().toString(), "   ========================= "));
+        System.out.println("");
+        System.out.println(String.format("%s", ">>> TEST STARTS:"));
+        System.out.println("");
+        System.out.println(String.format("%s", "Tracking ... "));
+        System.out.println("");
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
         printExecutionSummary(iTestResult);
-
     }
 
     @Override
+//    @Parameters({"screenShotsPath"})
     public void onTestFailure(ITestResult iTestResult) {
 
         printExecutionSummary(iTestResult);
         WebDriver driver = ((TestBase)(iTestResult.getInstance())).getDriver();
-        new TakeScreenshot().takeScreenshot(driver, FILES_STORAGE_PATH + utils.getCurrentDate() + ".png");
+        new TakeScreenshot().takeScreenshot(driver, FILES_STORAGE_PATH +  iTestResult.getName().toString() + utils.getCurrentDateTime() + ".png");
 
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        System.out.println(" =========================     Test Summary from Listener     ========================= ");
-        System.out.println(String.format("%s%s%s", "Test Name: ", iTestResult.getName().toString(), " skipped."));
-        System.out.println(String.format("%s%s", "Time: ", iTestResult.getStartMillis()).toString());
-        System.out.println(" ====================================================================================== ");
-
+        printExecutionSummary(iTestResult);
     }
 
     @Override
@@ -63,12 +65,40 @@ public class CustomListener implements ITestListener {
 
     }
 
+    // Prints the test execution summary at the end of the test execution
     private void printExecutionSummary(ITestResult result){
-        System.out.println(" =========================     Test Summary from Listener     ========================= ");
-        System.out.println(String.format("%s%s", "Test Name: ", result.getName()).toString());
-        System.out.println(String.format("%s%s", "Status: ", result.getStatus()).toString());
-        System.out.println(String.format("%s%s", "Time: ", result.getStartMillis()).toString());
+
+        System.out.println("");
+        System.out.println(">>> TEST EXECUTION SUMMARY:");
+        System.out.println("");
+        System.out.println(String.format("%s%s", "Test Case status: ", getStatus(result)));
+        System.out.println(String.format("%s%d", "Time elapsed: ", (result.getStartMillis())));
         System.out.println(" ====================================================================================== ");
 
     }
+
+    // Converts the Enum to readable text
+    private String getStatus(ITestResult iTestResult) {
+
+        String status;
+        switch (iTestResult.getStatus()) {
+            case ITestResult.SUCCESS:
+                status = "SUCCESS";
+                break;
+
+            case ITestResult.FAILURE:
+                status = "FAIL";
+                break;
+
+            case ITestResult.SKIP:
+                status = "SKIP / BLOCKED";
+                break;
+
+            default:
+                status = "INVALID STATUS";
+        }
+        return status;
+    }
+
+
 }

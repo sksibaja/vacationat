@@ -10,10 +10,7 @@ import org.openqa.selenium.WebElement;
  */
 public class EmployeeDetailsPage extends PageBase {
 
-    private static String PATH= "";
-
-    By pageHeader = By.xpath(".//*[@id='content']/h1");
-
+    private final String PATH= "";
 
     //Constructor initializes both drivers
     public EmployeeDetailsPage(WebDriver driver){
@@ -21,25 +18,11 @@ public class EmployeeDetailsPage extends PageBase {
     }
 
 
-    public boolean waitForPageHeader(){
-
-        WebElement header = botDriver.waitForElementPresent(pageHeader,10);
-        return header.isDisplayed();
-    }
-
     @Override
     protected void load() {
+
         this.driver.get(getPageURL(PATH));
     }
-
-//    @Override
-//    protected void isLoaded() throws Error {
-//        this.driver.get(getPageURL(PATH));
-//        JavascriptExecutor js = (JavascriptExecutor)this.driver;
-//        if (js.executeScript("return document.readyState").toString().equals("complete")){
-//            System.out.println("Employee Details page is loaded");
-//        }
-//    }
 
     @Override
     protected void isLoaded(){
@@ -51,8 +34,7 @@ public class EmployeeDetailsPage extends PageBase {
             }
         }catch(Exception ex)
         {
-            System.out.println("Error on Employee Details page:");
-            System.out.print(ex.getStackTrace().toString());
+            System.out.println(String.format("%s%s", "Error on Employee Details page:", ex.getStackTrace().toString()));
         }
 
     }

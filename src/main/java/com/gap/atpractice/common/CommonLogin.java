@@ -1,7 +1,9 @@
 package com.gap.atpractice.common;
 
+import com.gap.atpractice.pageobject.EmployeePage;
 import com.gap.atpractice.pageobject.LoginPage;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
 /**
  * Created by ssibaja on 6/5/17.
@@ -11,14 +13,12 @@ public class CommonLogin{
 
     private String LOGIN_SUCCESS_MESSAGE = "Signed in successfully.";
 
-    //I need to refactor this in order to return  the correct page
     public void TestLoginSuccess(String username, String password, WebDriver driver) {
 
-        //when using the last "get()", I'm avoiding the goToLoginPage method
         LoginPage loginpage = (LoginPage) new LoginPage(driver).get();
-        loginpage.userLoginSuccess(username, password);
+        EmployeePage employeePage = loginpage.userLoginSuccess(username, password);
+        Assert.assertTrue(employeePage.isLoginSuccessMessagePresent());
     }
-
 
     public String getLoginSuccessMessage (){
         return LOGIN_SUCCESS_MESSAGE;

@@ -14,12 +14,10 @@ public class EmployeePage extends PageBase{
     private static String PATH= "employees";
 
     //Locators
-    private By employeesInformationTab = By.xpath(".//*[@id='menu']/li[1]/a");
-    private By administrativeUsersTab = By.xpath(".//*[@id='menu']/li[2]/a");
-    private By myAccountTab = By.xpath(".//*[@id='menu']/li[3]/a");
-
-    private By loginSuccess = By.xpath(".//*[@id='content']/p[1]");
-    private By pageHeader = By.xpath(".//*[@id='content']/h1");
+    private By administrativeUsersTab = By.xpath(".//ul[@id='menu']/li[2]/a[@href='/users']");
+    private By myAccountTab = By.xpath(".//ul[@id='menu']/li[3]/a[@href='/my_account']");
+    private By loginSuccess = By.xpath(".//div[@id='content']/p[@class='flash_notice']");
+    private By pageHeader = By.xpath(".//div[@id='content']/h1");
 
 
     public  EmployeePage(WebDriver driver){
@@ -27,49 +25,30 @@ public class EmployeePage extends PageBase{
         super(driver);
     }
 
-//    public EmployeePage userNavigatesToEmployeesInfoTab(){
-//
-//        WebElement employeesInfoTabElm = super.driver.findElement(employeesInformationTab);
-//        employeesInfoTabElm.click();
-//        return new EmployeePage(super.driver);
-//    }
-
     public AdminUsersPage userNavigatesToAdministrativeUsersTab(){
 
-        WebElement adminUsersTabElm = super.driver.findElement(administrativeUsersTab);
-        adminUsersTabElm.click();
+        botDriver.click(administrativeUsersTab);
         return new AdminUsersPage(super.driver);
     }
 
     public MyAccountPage userNavigatesToMyAccountTab(){
 
-        WebElement myAccountTabElm = super.driver.findElement(myAccountTab);
-        myAccountTabElm.click();
+        botDriver.click(myAccountTab);
         return new MyAccountPage(super.driver);
     }
 
-    public EmployeePage getEmployeesPage (WebDriver driver){
-
-        return new EmployeePage(driver);
-    }
-
     public boolean isLoginSuccessMessagePresent(){
-
-        WebElement header = botDriver.waitForElementPresent(loginSuccess,10);
-        System.out.println(header.getText().toString());
-        return header.isDisplayed();
+        return botDriver.waitForElementPresent(loginSuccess,10);
     }
 
     public String getLoginSuccessMessage(){
 
-        WebElement message = botDriver.waitForElementPresent(loginSuccess,10);
-        return message.getText().toString();
+        return botDriver.getTextOnElementPresent(loginSuccess,10);
     }
 
     public String getPageHeaderText(){
 
-        WebElement header = botDriver.waitForElementPresent(pageHeader,10);
-        return header.getText().toString();
+        return botDriver.getTextOnElementPresent(pageHeader,10);
     }
 
     @Override
@@ -88,8 +67,7 @@ public class EmployeePage extends PageBase{
             }
         }catch(Exception ex)
         {
-            System.out.println("Error on Employee (tab) page:");
-            System.out.print(ex.getStackTrace().toString());
+            System.out.println(String.format("%s%s", "Error on Employee (tab) page:", ex.getStackTrace().toString()));
         }
 
     }

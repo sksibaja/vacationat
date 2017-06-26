@@ -31,6 +31,7 @@ public class LoginTest extends TestBase{
         LoginPage loginpage = (LoginPage) new LoginPage(driver).get();
         EmployeePage employeePage = loginpage.userLoginSuccess(username, password);
         Assert.assertTrue(employeePage.isLoginSuccessMessagePresent());
+
     }
 
     @Parameters({"username", "password"})
@@ -41,6 +42,7 @@ public class LoginTest extends TestBase{
         LoginPage loginpage = (LoginPage) new LoginPage(driver).get();
         EmployeePage employeePage = loginpage.userLoginSuccess(username, password);
         Assert.assertEquals(commonLogin.getLoginSuccessMessage(), employeePage.getLoginSuccessMessage());
+
     }
 
     // This Test uses the @Parameters annotation, cause the parameters are taking/set from the testNG xml file
